@@ -36,7 +36,7 @@ run-name: test-e2e-deploy ${{ inputs.nextVersion || (github.event_name == 'relea
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.repository_owner == 'vercel'
     outputs:
       next-version: ${{ steps.version.outputs.value }}
@@ -94,14 +94,14 @@ jobs:
       skipNativeInstall: 'no'
       stepName: 'test-deploy-${{ matrix.group }}'
       timeout_minutes: 180
-      runs_on_labels: '["ubuntu-latest"]'
+      runs_on_labels: '["ubuntu-24.04"]'
       overrideProxyAddress: ${{ inputs.overrideProxyAddress || '' }}
 
   report-test-results-to-datadog:
     needs: test-deploy
     if: ${{ always() }}
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: Report test results to datadog
     steps:
       - name: Download test report artifacts
@@ -122,7 +122,7 @@ jobs:
     name: Immediately open draft prs
     needs: setup
     if: ${{ github.repository_owner == 'vercel' && github.event_name == 'release' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -191,7 +191,7 @@ jobs:
     name: Update prs as ready for review
     needs: [test-deploy, create-draft-prs]
     if: ${{ needs.test-deploy.result == 'success' && github.repository_owner == 'vercel' && github.event_name == 'release' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:

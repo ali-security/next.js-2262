@@ -22,7 +22,7 @@ env:
 
 jobs:
   deploy-target:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Don't trigger this job on `pull_request` events from upstream branches.
     # Those would already run this job on the `push` event
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork }}
@@ -70,7 +70,7 @@ jobs:
     if: ${{ needs.deploy-target.outputs.value != 'skipped' }}
     needs:
       - deploy-target
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       NEXT_TELEMETRY_DISABLED: 1
       # we build a dev binary for use in CI so skip downloading
@@ -297,16 +297,16 @@ jobs:
       # https://github.com/actions/virtual-environments/issues/1187
       - name: tune linux network
         run: sudo ethtool -K eth0 tx off rx off
-        if: ${{ matrix.settings.host == 'ubuntu-latest' }}
+        if: ${{ matrix.settings.host == 'ubuntu-24.04' }}
       - name: tune linux network
         run: sudo ethtool -K eth0 tx off rx off
-        if: ${{ matrix.settings.host == 'ubuntu-latest' }}
+        if: ${{ matrix.settings.host == 'ubuntu-24.04' }}
       - name: tune windows network
         run: Disable-NetAdapterChecksumOffload -Name * -TcpIPv4 -UdpIPv4 -TcpIPv6 -UdpIPv6
-        if: ${{ matrix.settings.host == 'windows-latest' }}
+        if: ${{ matrix.settings.host == 'windows-2025' }}
       - name: tune mac network
         run: sudo sysctl -w net.link.generic.system.hwcksum_tx=0 && sudo sysctl -w net.link.generic.system.hwcksum_rx=0
-        if: ${{ matrix.settings.host == 'macos-latest' }}
+        if: ${{ matrix.settings.host == 'macos-15' }}
       # we use checkout here instead of the build cache since
       # it can fail to restore in different OS'
       - uses: actions/checkout@v4
@@ -487,7 +487,7 @@ jobs:
   deploy-tarball:
     if: ${{ needs.deploy-target.outputs.value != 'production' }}
     name: Deploy preview tarball
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - deploy-target
       - build
@@ -547,7 +547,7 @@ jobs:
   publishRelease:
     if: ${{ needs.deploy-target.outputs.value == 'production' }}
     name: Potentially publish release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - deploy-target
       - build
@@ -607,7 +607,7 @@ jobs:
   publish-turbopack-npm-packages:
     # Matches the commit message written by turbopack/xtask/src/publish.rs:377
     if: "${{(github.ref == 'refs/heads/next-16-0') && startsWith(github.event.head_commit.message, 'chore: release turbopack npm packages')}}"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       id-token: write
@@ -641,7 +641,7 @@ jobs:
   deployExamples:
     if: ${{ needs.deploy-target.outputs.value != 'automated-preview' }}
     name: Deploy examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [build, deploy-target]
     steps:
       - run: echo '${{ needs.deploy-target.outputs.value }}'
@@ -668,7 +668,7 @@ jobs:
     if: ${{ always() && needs.deploy-target.outputs.value != '' }}
     # Coupled with retry logic in retry_test.yml
     name: thank you, build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - run: exit 1
         if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) }}
@@ -704,7 +704,7 @@ jobs:
   upload_turbopack_bytesize:
     if: ${{ needs.deploy-target.outputs.value != 'automated-preview'}}
     name: Upload Turbopack Bytesize metrics to Datadog
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [build-native, deploy-target]
     env:
       DATADOG_API_KEY: ${{ secrets.DATA_DOG_API_KEY }}

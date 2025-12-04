@@ -2,8 +2,6 @@ name: test-e2e-project-reset-cron
 
 on:
   # Run every Sunday at 5AM UTC
-  schedule:
-    - cron: '0 5 * * 0'
   # Allow manual triggering for emergency resets
   workflow_dispatch:
 
@@ -18,7 +16,7 @@ run-name: test-e2e-project-reset (scheduled)
 
 jobs:
   reset-test-project:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.repository_owner == 'vercel'
     steps:
       - name: Setup Node.js

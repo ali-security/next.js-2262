@@ -15,7 +15,7 @@ permissions:
 jobs:
   triage:
     name: Nissuer
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: >-
       ${{
         (github.event_name != 'issue_comment' ||

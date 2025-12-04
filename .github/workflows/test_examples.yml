@@ -8,8 +8,6 @@ on:
         required: true
         default: true
         type: boolean
-  schedule:
-    - cron: '0 */4 * * *'
 
 name: Test examples
 
@@ -18,7 +16,7 @@ jobs:
     # Don't execute using cron on forks
     if: (github.repository == 'vercel/next.js') || (inputs.is_dispatched == true)
     name: Test Examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 120
     env:
       NEXT_TELEMETRY_DISABLED: 1

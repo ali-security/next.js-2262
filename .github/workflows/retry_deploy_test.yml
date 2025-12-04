@@ -23,7 +23,7 @@ jobs:
         github.repository == 'vercel/next.js' &&
         github.event.workflow_run.run_attempt < 2
       }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: send retry request to GitHub API
         env:
@@ -45,7 +45,7 @@ jobs:
         github.event.workflow_run.run_attempt >= 2 &&
         !github.event.workflow_run.head_repository.fork
       }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: send webhook
         uses: slackapi/slack-github-action@v1.25.0

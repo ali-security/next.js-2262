@@ -1,9 +1,7 @@
 name: Rspack Next.js production integration tests
 
 on:
-  schedule:
     # Run an hour earlier than the turbopack tests, so we don't overwhelm the CI
-    - cron: '0 5 * * *'
   workflow_dispatch: {}
 
 jobs:

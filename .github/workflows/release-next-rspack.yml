@@ -37,7 +37,7 @@ jobs:
       working-directory: rspack
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: npm
     name: Release
     permissions:
@@ -76,7 +76,7 @@ jobs:
         working-directory: ./rspack
 
       - name: Cache pnpm dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}

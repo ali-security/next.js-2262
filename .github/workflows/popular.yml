@@ -1,14 +1,12 @@
 name: Notify about the top 15 issues/PRs/feature requests (most reacted) in the last 90 days
 
 on:
-  schedule:
-    - cron: '0 10 * * 1' # Every Monday at 10AM UTC (6AM EST)
   workflow_dispatch:
 
 jobs:
   run:
     if: github.repository_owner == 'vercel'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -2,8 +2,6 @@ name: Update Font Data
 
 on:
   # Run every every day at midnight https://crontab.guru/#0_0_*_*_*/1
-  schedule:
-    - cron: '0 0 * * */1'
   # Allow manual runs
   workflow_dispatch:
 
@@ -12,7 +10,7 @@ env:
 
 jobs:
   create-pull-request:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.repository_owner == 'vercel'
     steps:
       - name: Checkout

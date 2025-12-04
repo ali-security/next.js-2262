@@ -21,7 +21,7 @@ jobs:
 
   changes:
     name: Determine changes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -103,7 +103,7 @@ jobs:
     secrets: inherit
 
   validate-docs-links:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -181,7 +181,7 @@ jobs:
 
   ast-grep:
     needs: ['changes', 'build-next']
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     name: ast-grep lint
     steps:
       - uses: actions/checkout@v4
@@ -210,7 +210,7 @@ jobs:
     with:
       afterBuild: |
         ./node_modules/.bin/devlow-bench ./scripts/devlow-bench.mjs \
-          --datadog=ubuntu-latest-16-core \
+          --datadog=ubuntu-24.04-16-core \
           ${{ matrix.mode }} \
           ${{ matrix.selector }}
       stepName: 'devlow-bench-${{ matrix.mode }}-${{ matrix.selector }}'
@@ -1019,7 +1019,7 @@ jobs:
       ]
 
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Coupled with retry logic in retry_test.yml
     name: thank you, next
     steps:

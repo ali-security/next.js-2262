@@ -34,7 +34,7 @@ env:
 jobs:
   optimize-ci:
     name: Graphite CI Optimizer
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       skip: ${{ env.HAS_BYPASS_LABEL == 'false' && steps.check-skip.outputs.skip == 'true' }}
     steps:

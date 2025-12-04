@@ -4,8 +4,6 @@
 name: Upload bundler test manifests to areweturboyet.com
 
 on:
-  schedule:
-    - cron: '0 8 * * *'
   workflow_dispatch: {}
   push:
     branches:
@@ -16,7 +14,7 @@ on:
 jobs:
   upload_test_results:
     name: Upload test results
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Setup node
         uses: actions/setup-node@v4

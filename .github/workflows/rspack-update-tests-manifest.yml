@@ -2,16 +2,14 @@
 name: Update Rspack test manifest
 
 on:
-  schedule:
     # Every day at 7AM https://crontab.guru/#0_7_*_*_*
-    - cron: '0 7 * * *'
   workflow_dispatch:
 
 jobs:
   update_dev_manifest:
     name: Update and upload Rspack development test manifest
     if: github.repository_owner == 'vercel'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,7 +49,7 @@ jobs:
   update_build_manifest:
     name: Update and upload Rspack production test manifest
     if: github.repository_owner == 'vercel'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
